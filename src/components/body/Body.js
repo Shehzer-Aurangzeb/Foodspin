@@ -57,13 +57,21 @@ function Body() {
   ];
   const [data, setData] = useState(dishes[0]);
   const [count, setCount] = useState(0);
-
+  const [x, setx] = useState(false);
   const handleSubmit = (action) => {
     if (action === "prev" && count != 0) {
+      setx(true);
+      setTimeout(() => {
+        setx(false);
+      });
       setData(dishes[count - 1]);
       setCount(count - 1);
     }
     if (action === "next" && count < dishes.length - 1) {
+      setx(true);
+      setTimeout(() => {
+        setx(false);
+      });
       setData(dishes[count + 1]);
       setCount(count + 1);
     }
@@ -73,7 +81,9 @@ function Body() {
     <BodyLayout>
       <Herosection meal={data.meal} />
       <div className="section-1">
-        <h1
+        <motion.h1
+          transition={{ duration: 0.75 }}
+          animate={{ scale: x ? [0, 1] : 1, transformOrigin: "left" }}
           className="dishPrice"
           style={{
             color:
@@ -83,10 +93,24 @@ function Body() {
           }}
         >
           {data.price}
-        </h1>
-        <h2 className="dishName">{data.name}</h2>
-        <p className="dishDesc">{data.desc}</p>
-        <CTA meal={data.meal}>ORDER NOW</CTA>
+        </motion.h1>
+        <motion.h2
+          className="dishName"
+          transition={{ duration: 0.75 }}
+          animate={{ scale: x ? [0, 1] : 1, transformOrigin: "left" }}
+        >
+          {data.name}
+        </motion.h2>
+        <motion.p
+          className="dishDesc"
+          transition={{ duration: 0.75 }}
+          animate={{ scale: x ? [0, 1] : 1, transformOrigin: "left" }}
+        >
+          {data.desc}
+        </motion.p>
+        <CTA meal={data.meal} animation={x}>
+          ORDER NOW
+        </CTA>
         <div className="link">
           <a href="#">Watch Video</a>
         </div>
@@ -96,19 +120,10 @@ function Body() {
         <motion.img
           src={data.image}
           className="dishes"
+          transition={{ duration: 0.75 }}
           animate={{
-            rotate:
-              data.meal === "breakfast"
-                ? [180, 0]
-                : data.meal === "lunch"
-                ? [180, 0]
-                : [180, 0],
-            scale:
-              data.meal === "breakfast"
-                ? [-1.25, 1]
-                : data.meal === "lunch"
-                ? [-1.25, 1]
-                : [-1.25, 1],
+            scale: x ? [-1, 1] : 1,
+            rotate: x ? [180, 0] : 0,
           }}
         />
         <CarouselBtn>

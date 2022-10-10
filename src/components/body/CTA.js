@@ -1,5 +1,4 @@
 import React from "react";
-// import Button from "react-bootstrap/Button";
 import styled from "styled-components";
 const Button = styled.button`
    {
@@ -13,6 +12,8 @@ const Button = styled.button`
     width: 163px;
     height: 48px;
     border: none;
+    transition: all 0.2s ease-in;
+    transform-orign: right;
   }
 `;
 export const CTA = (props) => {
